@@ -16,6 +16,7 @@ def main():
         action="store_true",
         help="Also send the reply to the active WeChat conversation",
     )
+    
     args = parser.parse_args()
 
     config_path = Path(args.config)
@@ -29,6 +30,7 @@ def main():
     messages = [{"role": "user", "content": args.message}]
     reply = client.chat(messages)
     print("Assistant:", reply)
+
     if args.wechat:
         try:
             from wechat_gpt.wechat.client import send_message
@@ -36,6 +38,7 @@ def main():
             send_message(reply)
         except Exception as e:  # noqa: BLE001
             logger.error("Failed to send via WeChat: %s", e)
+
 
 
 if __name__ == "__main__":
