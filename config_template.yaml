@@ -1,0 +1,16 @@
+# Rename this file to config.yaml and fill in your SiliconFlow API token and other settings
+api:
+  token: "YOUR_TOKEN_HERE"
+  base_url: "https://api.siliconflow.cn/v1"
+
+models:
+  chat: "Pro/deepseek-ai/DeepSeek-R1"
+  stt: "FunAudioLLM/SenseVoiceSmall"
+  tts: "FunAudioLLM/CosyVoice2-0.5B"
+  image: "Kwai-Kolors/Kolors"
+
+params:
+  temperature: 0.7
+  top_p: 0.7
+  top_k: 50
+  max_tokens: 512
