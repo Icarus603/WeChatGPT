@@ -11,6 +11,12 @@ def main():
     parser = argparse.ArgumentParser(description="Run WeChatGPT assistant")
     parser.add_argument("message", help="Message to send to the LLM")
     parser.add_argument("--config", default="config.yaml", help="Path to config file")
+    parser.add_argument(
+        "--wechat",
+        action="store_true",
+        help="Also send the reply to the active WeChat conversation",
+    )
+    
     args = parser.parse_args()
 
     config_path = Path(args.config)
@@ -24,6 +30,15 @@ def main():
     messages = [{"role": "user", "content": args.message}]
     reply = client.chat(messages)
     print("Assistant:", reply)
+
+    if args.wechat:
+        try:
+            from wechat_gpt.wechat.client import send_message
+
+            send_message(reply)
+        except Exception as e:  # noqa: BLE001
+            logger.error("Failed to send via WeChat: %s", e)
+
 
 
 if __name__ == "__main__":
