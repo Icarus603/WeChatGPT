@@ -16,6 +16,11 @@ def main():
         action="store_true",
         help="Also send the reply to the active WeChat conversation",
     )
+    parser.add_argument(
+        "--tts",
+        metavar="FILE",
+        help="Save the assistant's reply as a speech audio file",
+    )
     
     args = parser.parse_args()
 
@@ -38,6 +43,16 @@ def main():
             send_message(reply)
         except Exception as e:  # noqa: BLE001
             logger.error("Failed to send via WeChat: %s", e)
+
+    if args.tts:
+        try:
+            from wechat_gpt.voice.text_to_speech import text_to_speech
+
+            audio = text_to_speech(client, reply)
+            Path(args.tts).write_bytes(audio)
+            logger.info("Saved audio to %s", args.tts)
+        except Exception as e:  # noqa: BLE001
+            logger.error("Failed to generate speech: %s", e)
 
 
 

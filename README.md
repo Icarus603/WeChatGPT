@@ -19,24 +19,18 @@ Poetry for dependency management and pyenv for Python version control.
 
 ## Running
 
-Use the script in `scripts/run_assistant.py` as a starting point. It loads the
-
-configuration, sends a test message to SiliconFlow, and prints the response. Add
-`--wechat` to send the reply back to the active WeChat chat window via
-ClickClick:
+Use the `scripts/run_assistant.py` script to send a message to the SiliconFlow
+API and print the reply. The reply can also be sent to WeChat with `--wechat`
+and saved as a speech audio file with `--tts`:
 
 ```bash
-poetry run python scripts/run_assistant.py "Hello" --wechat
+poetry run python scripts/run_assistant.py "Hello" --wechat --tts reply.mp3
 ```
 
-To run the unit tests:
+## Testing
+
+Run the unit tests with:
 
 ```bash
 pytest -q
-
-configuration, sends a test message to SiliconFlow, and prints the response.
-
-```bash
-poetry run python scripts/run_assistant.py "Hello"
-
 ```
