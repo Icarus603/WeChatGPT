@@ -7,9 +7,13 @@ from wechat_gpt.util.logger import get_logger
 logger = get_logger(__name__)
 
 
-def main():
+def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Run WeChatGPT assistant")
-    parser.add_argument("message", help="Message to send to the LLM")
+    parser.add_argument(
+        "message",
+        nargs="?",
+        help="Message to send to the LLM. Ignored if --stt is provided",
+    )
     parser.add_argument("--config", default="config.yaml", help="Path to config file")
     parser.add_argument(
         "--wechat",
@@ -21,8 +25,13 @@ def main():
         metavar="FILE",
         help="Save the assistant's reply as a speech audio file",
     )
-    
-    args = parser.parse_args()
+    parser.add_argument(
+        "--stt",
+        metavar="FILE",
+        help="Use speech-to-text on the given audio file as the prompt",
+    )
+
+    args = parser.parse_args(argv)
 
     config_path = Path(args.config)
     if not config_path.exists():
@@ -31,6 +40,21 @@ def main():
 
     config = load_config(config_path)
     client = SiliconFlowClient(config)
+
+    if args.stt:
+        try:
+            from wechat_gpt.voice.speech_to_text import speech_to_text
+
+            audio_bytes = Path(args.stt).read_bytes()
+            args.message = speech_to_text(client, audio_bytes)
+            logger.info("Transcribed text: %s", args.message)
+        except Exception as e:  # noqa: BLE001
+            logger.error("Failed to transcribe audio: %s", e)
+            return
+
+    if not args.message:
+        logger.error("No message provided")
+        return
 
     messages = [{"role": "user", "content": args.message}]
     reply = client.chat(messages)
