@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Multi-modal WeChat assistant using SiliconFlow APIs"
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
+packages = [{ include = "wechat_gpt" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
