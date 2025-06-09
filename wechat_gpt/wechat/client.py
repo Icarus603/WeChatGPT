@@ -28,7 +28,6 @@ def send_message(text: str) -> None:
 def get_latest_message() -> str:
     """Placeholder for retrieving the latest message from WeChat."""
     logger.warning(
-        "get_latest_message is not implemented. This requires more complex ClickClick scripting."
+        "get_latest_message is not implemented. More complex ClickClick scripting is required."
     )
-    logger.warning("get_latest_message is not implemented. Returning empty string.")
     return ""
