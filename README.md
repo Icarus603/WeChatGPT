@@ -20,11 +20,16 @@ Poetry for dependency management and pyenv for Python version control.
 ## Running
 
 Use the `scripts/run_assistant.py` script to send a message to the SiliconFlow
-API and print the reply. The reply can also be sent to WeChat with `--wechat`
-and saved as a speech audio file with `--tts`:
+API and print the reply. The reply can also be sent to WeChat with `--wechat`,
+transcribed from an audio file with `--stt`, and saved as a speech audio file
+with `--tts`:
 
 ```bash
 poetry run python scripts/run_assistant.py "Hello" --wechat --tts reply.mp3
+```
+To transcribe audio as the prompt and read the reply aloud:
+```bash
+poetry run python scripts/run_assistant.py --stt question.wav --tts answer.mp3
 ```
 
 ## Testing

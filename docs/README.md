@@ -17,9 +17,13 @@ Copy `config_template.yaml` to `config.yaml` and provide your SiliconFlow API to
 
 ## Running
 
-You can send a prompt to the assistant and optionally relay the response to the active WeChat chat window. The reply can also be saved as an audio file using `--tts`:
+You can send a prompt to the assistant and optionally relay the response to the active WeChat chat window. The prompt may come from an audio file using `--stt`, and the reply can also be saved as an audio file using `--tts`:
 
 ```bash
 poetry run python scripts/run_assistant.py "Hello" --wechat --tts reply.mp3
+```
+To transcribe audio as the prompt and save the reply as an audio file:
+```bash
+poetry run python scripts/run_assistant.py --stt question.wav --tts answer.mp3
 ```
 
